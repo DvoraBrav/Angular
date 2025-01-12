@@ -22,7 +22,4 @@ export class AppComponent {
     }
   }
 
-  onKey(event:any) { // without type info
-    this.keyValuesList += event.target.value + ' | ';
-    }
 }
