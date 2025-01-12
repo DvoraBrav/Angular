@@ -1,0 +1,9 @@
+<ul class="studen-list">
+    <li *ngFor="let student of students">
+        <strong>{{ student.firstName }} {{ student.lastName }}</strong><br>
+        Address: {{ student.address }}<br>
+        Phone: {{ student.phone }}<br>
+        Active: {{ student.active ? 'Yes' : 'No' }}<br>
+        GPA: {{ student.gradePointAverage }}<br>
+    </li>
+</ul>
