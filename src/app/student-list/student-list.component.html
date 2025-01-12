@@ -5,5 +5,7 @@
         Phone: {{ student.phone }}<br>
         Active: {{ student.active ? 'Yes' : 'No' }}<br>
         GPA: {{ student.gradePointAverage }}<br>
+        <button (click)="onDeleteStudent(student.id)">Delete {{ student.firstName }} {{ student.lastName }}</button>
     </li>
 </ul>
+

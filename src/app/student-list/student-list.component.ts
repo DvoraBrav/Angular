@@ -20,11 +20,19 @@ export class StudentListComponent {
     {
       id: 2,
       firstName: 'Shalom',
-      lastName: 'Kevi',
+      lastName: 'Levi',
       address: 'bb',
       phone: '0598759850',
       active: true,
       gradePointAverage: 98
     },
   ];
+
+  onDeleteStudent(studentId: number) {
+    const index = this.students.findIndex(student => student.id === studentId);
+    if (index !== -1) {
+      this.students.splice(index, 1);
+    }
+  }
+
 }

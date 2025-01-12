@@ -6,9 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'MY APP';
-  keyValuesList = '';
-  
+  title = 'MY APP';  
 
   getWelcomingAcordingToHour() {
     const hours = new Date().getHours();
