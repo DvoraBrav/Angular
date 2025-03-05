@@ -1,0 +1,58 @@
+<form [formGroup]="studentForm" *ngIf="student" (ngSubmit)="doneEditOrAdd()">
+    <div class="card">
+        <div class="card-body">
+            <h5>Student Details</h5>
+            <div class="form-group">
+                <label for="studentId">Student ID:</label>
+                <input type="text" class="form-control" id="studentId" [value]="student.id" readonly>
+            </div>
+            <div class="form-group">
+                <label for="name">Student Name:</label>
+                <input type="text" class="form-control" id="name" formControlName="firstName" [ngClass]="{'is-invalid': studentForm.get('firstName')?.invalid && studentForm.get('firstName')?.touched}">
+                <div *ngIf="studentForm.get('firstName')?.invalid && studentForm.get('firstName')?.touched" class="text-danger">
+                    First name is required.
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="lastName">Last Name:</label>
+                <input type="text" class="form-control" id="lastName" formControlName="lastName" [ngClass]="{'is-invalid': studentForm.get('lastName')?.invalid && studentForm.get('lastName')?.touched}">
+                <div *ngIf="studentForm.get('lastName')?.invalid && studentForm.get('lastName')?.touched" class="text-danger">
+                    Last name is required.
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="address">Address:</label>
+                <input type="text" class="form-control" id="address" formControlName="address" [ngClass]="{'is-invalid': studentForm.get('address')?.invalid && studentForm.get('address')?.touched}">
+                <div *ngIf="studentForm.get('address')?.invalid && studentForm.get('address')?.touched" class="text-danger">
+                    Address is required.
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone:</label>
+                <input type="text" class="form-control" id="phone" formControlName="phone" [ngClass]="{'is-invalid': studentForm.get('phone')?.invalid && studentForm.get('phone')?.touched}">
+                <div *ngIf="studentForm.get('phone')?.invalid && studentForm.get('phone')?.touched" class="text-danger">
+                    Phone number is required and must be 10 digits.
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="active">Active:</label>
+                <select class="form-control" id="active" formControlName="active">
+                    <option [value]="true">Yes</option>
+                    <option [value]="false">No</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="gpa">GPA:</label>
+                <input type="number" class="form-control" id="gpa" formControlName="gradePointAverage" [ngClass]="{'is-invalid': studentForm.get('gradePointAverage')?.invalid && studentForm.get('gradePointAverage')?.touched}">
+                <div *ngIf="studentForm.get('gradePointAverage')?.invalid && studentForm.get('gradePointAverage')?.touched" class="text-danger">
+                    GPA is required and must be between 0 and 4.
+                </div>
+            </div>
+            <div class="form-group" *ngIf="studentForm.get('active')?.value == false" >
+                <label for="leavingDate">Leaving Date:</label>
+                <input type="date" class="form-control" id="leavingDate" formControlName="leavingDate">
+            </div>
+            <button type="submit" class="btn btn-primary" [disabled]="studentForm.invalid">Done</button>
+        </div>
+    </div>
+</form>

@@ -1,11 +1,36 @@
-<ul class="studen-list">
-    <li *ngFor="let student of students">
-        <strong>{{ student.firstName }} {{ student.lastName }}</strong><br>
-        Address: {{ student.address }}<br>
-        Phone: {{ student.phone }}<br>
-        Active: {{ student.active ? 'Yes' : 'No' }}<br>
-        GPA: {{ student.gradePointAverage }}<br>
-        <button (click)="onDeleteStudent(student.id)">Delete {{ student.firstName }} {{ student.lastName }}</button>
+<ul class="list-group">
+    <li class="list-group-item">
+        <div class="row">
+            <div class="col-2">Name</div>
+            <div class="col-1">Address</div>
+            <div class="col-1">Phone</div>
+            <div class="col-2">Active</div>
+            <div class="col-1">Average</div>
+        </div>
     </li>
+    <li *ngFor="let student of students"
+        class="list-group-item"
+        [ngClass]="{'active': selectedStudent && student.id==selectedStudent.id, 'list-group-item-success': student.active}"
+        [class.list-group-item-danger]="!student.active">
+        <div class="row">
+            <div class="col-2"><strong>{{ student.firstName }} {{ student.lastName }}</strong></div>
+            <div class="col-1">{{ student.address }}</div>
+            <div class="col-1">{{ student.phone }}</div>
+            <div class="col-2">{{ student.active ? 'Yes' : 'Left on ' }}{{student.leavingDate ? (student.leavingDate | date:'dd/MM/yyyy'): ''}}</div>
+            <div class="col-1">{{ student.gradePointAverage }}</div>
+
+            <div class="col-2">
+                <button (click)="onEditStudent(student)">Show Details</button>
+            </div>
+            <div class="col-2">
+                <button (click)="onDeleteStudent(student.id)">Delete Task</button>
+            </div>
+        </div>
+    </li>
+
 </ul>
 
+<button (click)="onAddStudent()">Add Student</button>
+<br>
+
+<student-details [student]="selectedStudent" (onEdittedStudent)="onEditOrAddStudent($event)"></student-details>

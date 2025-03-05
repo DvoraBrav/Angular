@@ -1,0 +1,98 @@
+<div class="card" *ngIf="student">
+    🩷🩷{{student | json}}🩷🩷
+    <div class="card-body">
+       student details
+       <div class="form-group">
+            <label for="name">Student Name:</label>
+            <input type="text" class="form-control" id="name" [value]="student.firstName" ><!--(focus)="inputFocus()">-->
+       </div>
+       <strong>{{ student.firstName }} {{ student.lastName }}</strong><br>
+        Address: {{ student.address }}<br>
+        Phone: {{ student.phone }}<br>
+        Active: {{ student.active ? 'Yes' : 'No' }}<br>
+        GPA: {{ student.gradePointAverage }}<br>
+        <div>{{student.leavingDate ? 'Leaving Date: ' + (student.leavingDate | date:'dd/MM/yyyy'): ''}}</div>
+
+    <button (click)="doneEditOrAdd()">Done</button>
+    </div>
+</div>
+////////////////////////////////////////////////////////////////////////////////////////////
+// import { Component, EventEmitter, Input, Output } from '@angular/core';
+// import { Student } from '../iterrface/student.model';
+
+// @Component({
+//   selector: 'student-details',
+//   templateUrl: './student-details.component.html',
+//   styleUrls: ['./student-details.component.scss']
+// })
+// export class StudentDetailsComponent {
+//   @Input() student?: Student; 
+//   @Output() onEdittedStudent: EventEmitter<Student> = new EventEmitter<Student>();
+
+//   newStudent = this.student
+
+
+//   doneEditOrAdd() {
+//     this.onEdittedStudent.emit(this.newStudent)
+//   }
+// }
+
+import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges, OnInit } from '@angular/core';
+import { Student } from '../iterrface/student.model';
+import { FormControl, FormGroup } from '@angular/forms';
+
+@Component({
+  selector: 'student-details',
+  templateUrl: './student-details.component.html',
+  styleUrls: ['./student-details.component.scss']
+})
+export class StudentDetailsComponent implements OnChanges, OnInit {
+  // ngOnInit(): void {
+  //   this.studentForm = new FormGroup({
+  //     email: new FormControl(),
+  //     password: new FormControl(),
+  //     });
+  // }
+  
+  @Input() student?: Student; 
+  @Output() onEdittedStudent: EventEmitter<Student> = new EventEmitter<Student>();
+
+  newStudent: Student = { id: 0, firstName: '', lastName: '', address: '', phone: '', active: false, gradePointAverage: 0 };
+  studentForm: FormGroup;
+
+  constructor() {
+    this.studentForm = new FormGroup({
+      firstName: new FormControl(''),
+      lastName: new FormControl(''),
+      address: new FormControl(''),
+      phone: new FormControl(''),
+      active: new FormControl(false),
+      gradePointAverage: new FormControl(''),
+      leavingDate: new FormControl('')
+    });
+  }
+
+  ngOnInit() {
+    if (this.student) {
+      this.studentForm.patchValue(this.student);
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['student'] && changes['student'].currentValue) {
+      this.newStudent = { ...changes['student'].currentValue }; // Create a copy of the student object
+    }
+  }
+
+  doneEditOrAdd() {
+    this.onEdittedStudent.emit(this.newStudent);
+    // Handle form submission
+    console.log(this.studentForm.value)
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
