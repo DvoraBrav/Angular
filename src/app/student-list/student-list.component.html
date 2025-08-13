@@ -1,11 +1,14 @@
 <ul class="list-group">
     <li class="list-group-item">
         <div class="row">
+            <div class="col-1">ID</div>
             <div class="col-2">Name</div>
             <div class="col-1">Address</div>
             <div class="col-1">Phone</div>
-            <div class="col-2">Active</div>
+            <div class="col-1">Year</div>
             <div class="col-1">Average</div>
+            <div class="col-1">Subject</div>
+            <div class="col-1">Active</div>
         </div>
     </li>
     <li *ngFor="let student of students"
@@ -13,17 +16,21 @@
         [ngClass]="{'active': selectedStudent && student.id==selectedStudent.id, 'list-group-item-success': student.active}"
         [class.list-group-item-danger]="!student.active">
         <div class="row">
+            <div class="col-1"><strong>{{ student.id }}</strong></div>
             <div class="col-2"><strong>{{ student.firstName }} {{ student.lastName }}</strong></div>
             <div class="col-1">{{ student.address }}</div>
             <div class="col-1">{{ student.phone }}</div>
-            <div class="col-2">{{ student.active ? 'Yes' : 'Left on ' }}{{student.leavingDate ? (student.leavingDate | date:'dd/MM/yyyy'): ''}}</div>
+            <div class="col-1">{{ student.year }}</div>
             <div class="col-1">{{ student.gradePointAverage }}</div>
+            <div class="col-1">{{ student.subject }}</div>
+            <!-- <div class="col-2">{{ student.active ? 'Yes' : 'Left on ' }}{{student.leavingDate ? (student.leavingDate | date:'dd/MM/yyyy'): ''}}</div> -->
+            <div class="col-2">{{ student.active ? 'Yes' : 'Left on ' + (student.leavingDate | date:'dd/MM/yyyy')}}</div>
 
-            <div class="col-2">
+            <div class="col-1">
                 <button (click)="onEditStudent(student)">Show Details</button>
             </div>
-            <div class="col-2">
-                <button (click)="onDeleteStudent(student.id)">Delete Task</button>
+            <div class="col-1">
+                <button (click)="onDeleteStudent(student.id)">Delete User</button>
             </div>
         </div>
     </li>
@@ -33,4 +40,9 @@
 <button (click)="onAddStudent()">Add Student</button>
 <br>
 
-<student-details [student]="selectedStudent" (onEdittedStudent)="onEditOrAddStudent($event)"></student-details>
+<student-details [student]="selectedStudent" (onEdittedStudent)="onEditOrAddStudent($event)" (onCancel)="onCancel()"></student-details>
+
+<div *ngIf="message" class="notification" style="color: rgb(104, 104, 184); font-size: large;">
+    {{ message }}
+</div>
+

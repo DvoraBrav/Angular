@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { Student } from '../iterrface/student.model';
+import { Student, Subject, StudyYear } from '../models/student.model';
+import { max } from 'rxjs';
 
 @Component({
   selector: 'student-list',
@@ -9,35 +10,42 @@ import { Student } from '../iterrface/student.model';
 export class StudentListComponent {
 
   selectedStudent?: Student;
+  message: string | null = null;
 
   public students: Student[] = [
     {
       id: 1,
       firstName: 'Avraham',
       lastName: 'Cohen',
-      address: 'aa',
+      address: 'aaaa',
       phone: '0578579525',
+      year: StudyYear.first,
       active: true,
-      gradePointAverage: 90
+      gradePointAverage: 90,
+      subject: Subject.computer
     },
     {
       id: 2,
       firstName: 'Shalom',
       lastName: 'Levi',
-      address: 'bb',
+      address: 'bbbb',
       phone: '0598759850',
+      year: StudyYear.second,
       active: true,
-      gradePointAverage: 98
+      gradePointAverage: 98,
+      subject: Subject.english
     },
     {
       id: 3,
       firstName: 'Daniel',
       lastName: 'Levi',
-      address: 'cc',
+      address: 'cccc',
       phone: '0598759850',
+      year: StudyYear.third,
       active: false,
       gradePointAverage: 68,
-      leavingDate: new Date("2023-06-15")
+      leavingDate: new Date("2023-06-15"),
+      subject: Subject.math
     },
   ];
 
@@ -53,29 +61,42 @@ export class StudentListComponent {
   }
 
   onAddStudent() {
-    this.selectedStudent = { id: 0, firstName: '', lastName: '', address: '', phone: '', active: true, gradePointAverage: 0};
+    this.selectedStudent = { id: 0, firstName: '', lastName: '', address: '', phone: '', year: StudyYear.first, active: true, gradePointAverage: 0, subject: Subject.undefined };
   }
 
   onEditOrAddStudent(student: Student) {
     if (student.id == 0) {
       this.onSaveAddStudent(student);
-  } else {
+      this.message = 'User added successfully';
+    } else {
       this.onSaveEditStudent(student);
-  }
+      this.message = 'Changes saved';
+    }
+
+    setTimeout(() => {
+      this.message = null;
+    }, 2000); // Duration in milliseconds
   }
   onSaveAddStudent(student: Student) {
+    let maxId = this.students.reduce((max, student) => Math.max(max, student.id), 0);
+    student.id = maxId + 1
     this.students.push(student);
     this.selectedStudent = undefined;
-    
   }
 
   onSaveEditStudent(student: Student) {
     let studentToUpdate = this.students.filter(x => x.id == student.id)[0];
     let studentIndex = this.students.indexOf(studentToUpdate);
     this.students[studentIndex] = student;
-    
+
     this.selectedStudent = undefined;
 
+  }
+
+
+
+  onCancel() {
+    this.selectedStudent = undefined
   }
 
 }
