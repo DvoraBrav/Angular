@@ -3,8 +3,11 @@
     <h3>{{title}}</h3>
 
     Students list:
-    <student-list></student-list>
+    <!-- <student-list></student-list> -->
+
+    <student-list (studentSelectedEvent)="onStudentSelected($event)"></student-list>
+    <app-exam-list [exams]="exams" [student]="selectedStudent"></app-exam-list>
+
 </div>
 
 <router-outlet></router-outlet>
-

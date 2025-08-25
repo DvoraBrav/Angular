@@ -1,6 +1,9 @@
 import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges, OnInit } from '@angular/core';
 import { Student, Subject, StudyYear } from '../models/student.model';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { StudentService } from '../student.service';
+import { AbsenceDays } from '../models/absenceDays.model';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'student-details',
@@ -12,11 +15,15 @@ export class StudentDetailsComponent implements OnChanges, OnInit {
   @Output() onEdittedStudent: EventEmitter<Student> = new EventEmitter<Student>();
   @Output() onCancel: EventEmitter<void> = new EventEmitter<void>();
 
+  absenceStartDate?: Date 
+  absenceDays?: number
+  absenceDaysSum: number = 0
+
   studentForm: FormGroup;
   subjects = Object.values(Subject); // Get enum values
   StudyYear = StudyYear;
 
-  constructor() {
+  constructor(private _studentService: StudentService) {
     this.studentForm = new FormGroup({
       studentId: new FormControl({ value: '', disabled: true }), // Read-only control
       firstName: new FormControl('', { validators: Validators.required, updateOn: 'change' }), // Required field
@@ -39,12 +46,15 @@ export class StudentDetailsComponent implements OnChanges, OnInit {
   }
 
   ngOnInit() {
-
+    
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['student'] && this.student) {
+      this.absenceStartDate = undefined
+      this.absenceDays = 0
       this.studentForm.patchValue(this.student);
+      this.absenceDaysSum = this._studentService.calcAbsenceDays(this.student.id)
     }
 
     // Subscribe to changes in the active control
@@ -84,7 +94,11 @@ export class StudentDetailsComponent implements OnChanges, OnInit {
     });
   }
 
-  doneEditOrAdd() {
+  async doneEditOrAdd() {
+    if (this.student && this.absenceStartDate && this.absenceDays) {
+      await this._studentService.addAbsence(this.student, this.absenceStartDate, this.absenceDays)
+    }
+
     // Create a new student object from the form values
     const updatedStudent: Student = {
       id: this.student ? this.student.id : 0, // Use existing ID or set to 0 for new student
@@ -96,7 +110,9 @@ export class StudentDetailsComponent implements OnChanges, OnInit {
       active: this.studentForm.value.active,
       gradePointAverage: this.studentForm.value.gradePointAverage,
       leavingDate: this.studentForm.value.leavingDate,
-      subject: this.studentForm.value.subject
+      subject: this.studentForm.value.subject,
+      exams: this.student?.exams ?? [],
+      absenceDays: this.student?.absenceDays ?? [],
     };
 
 

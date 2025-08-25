@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Student } from './models/student.model';
+import { Exam } from './models/exam.model';
 
 @Component({
   selector: 'app-root',
@@ -6,7 +8,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'MY APP';  
+  title = 'MY APP';
+  
+  selectedStudent?: Student;
+  exams: Exam[] = [];
+    
+   onStudentSelected(student: Student) {
+    this.selectedStudent = student;
+    this.exams = student.exams ?? []; 
+  }
 
   getWelcomingAcordingToHour() {
     const hours = new Date().getHours();

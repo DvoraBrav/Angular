@@ -37,10 +37,12 @@
                     class="alert alert-danger">
                     Address is required, the address must be at least 4 chars.
                 </div> -->
-                 <!-- && studentForm.controls['address'].touched -->
-                <ng-container *ngIf="studentForm.controls['address'].errors"> 
-                    <div class="alert alert-danger" *ngIf="studentForm.controls['address'].errors['required']">Address is required.</div>
-                    <div class="alert alert-danger" *ngIf="studentForm.controls['address'].errors['minlength']">This field must be at least 4 chars</div>
+                <!-- && studentForm.controls['address'].touched -->
+                <ng-container *ngIf="studentForm.controls['address'].errors">
+                    <div class="alert alert-danger" *ngIf="studentForm.controls['address'].errors['required']">Address
+                        is required.</div>
+                    <div class="alert alert-danger" *ngIf="studentForm.controls['address'].errors['minlength']">This
+                        field must be at least 4 chars</div>
                 </ng-container>
             </div>
 
@@ -52,8 +54,10 @@
                     Phone number is required and must be 10 digits.
                 </div> -->
                 <ng-container *ngIf="studentForm.controls['phone'].errors">
-                    <div class="alert alert-danger" *ngIf="studentForm.controls['phone'].errors['required']">Phone number is required.</div>
-                    <div class="alert alert-danger" *ngIf="studentForm.controls['phone'].errors['pattern']">Phone number must be 10 digits.</div>
+                    <div class="alert alert-danger" *ngIf="studentForm.controls['phone'].errors['required']">Phone
+                        number is required.</div>
+                    <div class="alert alert-danger" *ngIf="studentForm.controls['phone'].errors['pattern']">Phone number
+                        must be 10 digits.</div>
                 </ng-container>
             </div>
 
@@ -90,9 +94,13 @@
                     Average is required and must be between 0 and 100.
                 </div> -->
                 <ng-container *ngIf="studentForm.controls['gradePointAverage'].errors">
-                    <div class="alert alert-danger" *ngIf="studentForm.controls['gradePointAverage'].errors['required']">Average field is required.</div>
-                    <div class="alert alert-danger" *ngIf="studentForm.controls['gradePointAverage'].errors['min']">This field must be between 0 and 100</div>
-                    <div class="alert alert-danger" *ngIf="studentForm.controls['gradePointAverage'].errors['max']">This field must be between 0 and 100</div>
+                    <div class="alert alert-danger"
+                        *ngIf="studentForm.controls['gradePointAverage'].errors['required']">Average field is required.
+                    </div>
+                    <div class="alert alert-danger" *ngIf="studentForm.controls['gradePointAverage'].errors['min']">This
+                        field must be between 0 and 100</div>
+                    <div class="alert alert-danger" *ngIf="studentForm.controls['gradePointAverage'].errors['max']">This
+                        field must be between 0 and 100</div>
                 </ng-container>
             </div>
 
@@ -102,7 +110,8 @@
                     <option *ngFor="let subj of subjects" [value]="subj">{{subj}}</option>
                 </select>
                 <ng-container *ngIf="studentForm.controls['subject'].errors">
-                    <div class="alert alert-danger" *ngIf="studentForm.controls['subject'].errors['required']">Subject is required.</div>
+                    <div class="alert alert-danger" *ngIf="studentForm.controls['subject'].errors['required']">Subject
+                        is required.</div>
                 </ng-container>
             </div>
 
@@ -118,6 +127,14 @@
             </div>
 
             <!-- <br>{{studentForm.value|json}} -->
+
+            <div class="absence-style">
+                Total absence days: {{absenceDaysSum}}<br>
+                From date: <input type="date" [(ngModel)]="absenceStartDate" placeholder="Absence start date"
+                    [ngModelOptions]="{standalone: true}" /><br>
+                Total days: <input type="number" [(ngModel)]="absenceDays" placeholder="Absence days"
+                    [ngModelOptions]="{standalone: true}" min="0"/><br>
+            </div>
 
             <button type="submit" class="btn btn-primary" [disabled]="studentForm.invalid">Save</button>
             <button type="buttun" class="btn btn-primary" (click)="cancel()">Cancel</button>

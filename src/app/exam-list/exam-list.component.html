@@ -1,0 +1,20 @@
+Average: {{average}}
+<br>
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Date</th>
+      <th>description</th>
+      <th>grade</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let exam of exams">
+      <td>{{ exam.code }}</td>
+      <td>{{ exam.date | date }}</td>
+      <td>{{ exam.description }}</td>
+      <td>{{ exam.grade }}</td>
+    </tr>
+  </tbody>
+</table>

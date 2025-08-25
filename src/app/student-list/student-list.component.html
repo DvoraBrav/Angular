@@ -1,3 +1,4 @@
+{{selectedStudent|json}}<br>
 <ul class="list-group">
     <li class="list-group-item">
         <div class="row">
@@ -9,6 +10,7 @@
             <div class="col-1">Average</div>
             <div class="col-1">Subject</div>
             <div class="col-1">Active</div>
+            <div class="col-1">Absences</div>
         </div>
     </li>
     <li *ngFor="let student of students"
@@ -23,8 +25,8 @@
             <div class="col-1">{{ student.year }}</div>
             <div class="col-1">{{ student.gradePointAverage }}</div>
             <div class="col-1">{{ student.subject }}</div>
-            <!-- <div class="col-2">{{ student.active ? 'Yes' : 'Left on ' }}{{student.leavingDate ? (student.leavingDate | date:'dd/MM/yyyy'): ''}}</div> -->
             <div class="col-2">{{ student.active ? 'Yes' : 'Left on ' + (student.leavingDate | date:'dd/MM/yyyy')}}</div>
+            <div class="col-1">{{ calcAbsenceDays(student.id) }}</div>
 
             <div class="col-1">
                 <button (click)="onEditStudent(student)">Show Details</button>
