@@ -2,9 +2,10 @@
     <h1>{{getWelcomingAcordingToHour()}}</h1>
     <h3>{{title}}</h3>
 
+    <app-observable-practice></app-observable-practice>
+    
     Students list:
     <!-- <student-list></student-list> -->
-
     <student-list (studentSelectedEvent)="onStudentSelected($event)"></student-list>
     <app-exam-list [exams]="exams" [student]="selectedStudent"></app-exam-list>
 

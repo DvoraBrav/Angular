@@ -8,6 +8,7 @@ import { StudentDetailsComponent } from './student-details/student-details.compo
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StudentService } from './student.service';
 import { ExamListComponent } from './exam-list/exam-list.component';
+import { ObservablePracticeComponent } from './observable-practice/observable-practice.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { ExamListComponent } from './exam-list/exam-list.component';
     StudentListComponent,
     StudentDetailsComponent,
     ExamListComponent,
+    ObservablePracticeComponent,
   ],
   imports: [
     BrowserModule,
